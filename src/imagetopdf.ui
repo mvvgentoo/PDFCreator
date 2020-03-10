@@ -49,7 +49,7 @@
      <item row="1" column="0">
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
-        <widget class="QPushButton" name="pushButton">
+        <widget class="QPushButton" name="plusButton">
          <property name="text">
           <string/>
          </property>
@@ -113,25 +113,6 @@
         </spacer>
        </item>
       </layout>
-     </item>
-     <item row="4" column="0">
-      <widget class="QListView" name="InputFiles"/>
-     </item>
-     <item row="4" column="3">
-      <widget class="QListView" name="OutputFiles">
-       <property name="layoutDirection">
-        <enum>Qt::LeftToRight</enum>
-       </property>
-       <property name="lineWidth">
-        <number>3</number>
-       </property>
-       <property name="midLineWidth">
-        <number>1</number>
-       </property>
-       <property name="autoScrollMargin">
-        <number>10</number>
-       </property>
-      </widget>
      </item>
      <item row="3" column="1" rowspan="2" colspan="2">
       <widget class="Line" name="line">
@@ -202,6 +183,25 @@
        </item>
       </layout>
      </item>
+     <item row="4" column="0">
+      <widget class="QListWidget" name="InputFiles"/>
+     </item>
+     <item row="4" column="3">
+      <widget class="QListWidget" name="OutputFiles">
+       <property name="layoutDirection">
+        <enum>Qt::LeftToRight</enum>
+       </property>
+       <property name="lineWidth">
+        <number>3</number>
+       </property>
+       <property name="midLineWidth">
+        <number>1</number>
+       </property>
+       <property name="autoScrollMargin">
+        <number>10</number>
+       </property>
+      </widget>
+     </item>
     </layout>
    </widget>
    <widget class="QWidget" name="SettingsTab">
@@ -222,8 +222,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
+     <x>268</x>
+     <y>530</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -238,8 +238,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>316</x>
-     <y>260</y>
+     <x>336</x>
+     <y>530</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>

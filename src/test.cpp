@@ -10,6 +10,7 @@
 #include <QApplication>
 #include <QWidget>
 #include <ui_imagetopdf.h>
+#include "imagetopdfdialog.h"
 
 using Image = Magick::Image;
 using Blob = Magick::Blob;
@@ -54,9 +55,9 @@ int main(int argc, char ** argv )
 
     QApplication app(argc, argv);
 
-    QDialog dialog;
-    Ui::ImageToPDFDialog window;
-    window.setupUi(&dialog);
+    ImageToPDF::ImageToPDFForm dialog;
+    //Ui::ImageToPDFDialog window;
+    //window.setupUi(&dialog);
 
     //QWidget window;
 
