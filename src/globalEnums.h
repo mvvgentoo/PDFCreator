@@ -4,9 +4,10 @@
 
 namespace ImageToPDF
 {
-  enum class ListOfConverters
+  enum class ListOfConverters : char
   {
-
+      PDF = 0,
+      PNG
   };
 
   static std::map<std::string, std::string> s_Mapping

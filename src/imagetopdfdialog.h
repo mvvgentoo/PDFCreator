@@ -14,6 +14,9 @@ namespace ImageToPDF
     private slots:
       //void AddElement();
       void on_plusButton_clicked();
+      void on_removeAllButton_clicked();
+      void on_buttonBox_clicked(QAbstractButton* btn);
+      void on_buttonBox_rejected();
 
     private:
       Ui::ImageToPDFDialog m_UiForm;

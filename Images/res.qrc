@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="newPrefix">
+    <file>cancel.jpg</file>
     <file>plus.jpg</file>
     <file>minus.jpg</file>
   </qresource>

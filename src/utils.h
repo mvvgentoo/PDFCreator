@@ -9,4 +9,6 @@ namespace ImageToPDF
   const char* _Extension(const char* filename);
 
   std::string GetNameNoExtension(const std::string& filename);
+
+  void DebugOutput(const std::string& var);
 }

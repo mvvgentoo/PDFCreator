@@ -3,6 +3,10 @@
 #include <string.h>
 #include <string>
 
+#ifdef _DEBUG_OUTPUT_
+  #include <iostream>
+#endif
+
 namespace ImageToPDF
 {
   char* _GetNameNoExtension(const char* filename, char* dst)
@@ -35,6 +39,13 @@ namespace ImageToPDF
     const char* p = strrchr (filename, delim);
 
     return p ? p + 1 : filename;
+  }
+
+  void DebugOutput(const std::__cxx11::string &var)
+  {
+#ifdef _DEBUG_OUTPUT_
+    std::cout << var << std::endl;
+#endif
   }
 
 }

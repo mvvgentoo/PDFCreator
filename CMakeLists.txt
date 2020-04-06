@@ -49,7 +49,10 @@ qt5_use_modules(${BINARY_NAME} Widgets)
 #	target_link_libraries(producer_consumer "${CMAKE_THREAD_LIBS_INIT}")
 #endif()
 
-#add_definitions(-DUSE_PTHREAD=0)
+add_definitions(-D_DEBUG_OUTPUT_=1)
+add_definitions(-DTESTING_MAGICK=0)
+add_definitions(-DTESTING_QT=1)
+
 
 
 

@@ -20,6 +20,8 @@ int main(int argc, char ** argv )
 {
 	Magick::InitializeMagick(*argv);
 
+#define TESTING_MAGICK 0
+
 #if TESTING_MAGICK
 
     std::vector<Image> ims(2);
@@ -38,6 +40,7 @@ int main(int argc, char ** argv )
 
 #endif
 
+#if TESTING_QT
 	char dst[30];
     char *a =  ImageToPDF::_GetNameNoExtension(argv[2], dst);
 	std::cout << a << std::endl;
@@ -71,5 +74,5 @@ int main(int argc, char ** argv )
 
     //return 0;
 	//Blob blob;
-
+#endif
 }
