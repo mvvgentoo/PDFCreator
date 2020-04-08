@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>837</width>
-    <height>678</height>
+    <width>1015</width>
+    <height>725</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -238,6 +238,19 @@
      </widget>
     </item>
    </layout>
+  </widget>
+  <widget class="QLabel" name="ImagePreview">
+   <property name="geometry">
+    <rect>
+     <x>710</x>
+     <y>260</y>
+     <width>231</width>
+     <height>181</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
   </widget>
  </widget>
  <resources>

@@ -19,6 +19,16 @@ ImageToPDF::ImageToPDFForm::ImageToPDFForm(QDialog *parent) : QDialog(parent)
   //connect(m_UiForm.plusButton, SIGNAL(clicked()), SLOT(AddElement() ) );
 //  connect(m_UiForm.plusButton, &QAbstractButton::clicked, this, &ImageToPDFForm::AddElement);
 
+
+  connect(m_UiForm.InputFiles, SIGNAL(itemClicked(QListWidgetItem*)), SLOT(itemClicked(QListWidgetItem *)));
+}
+
+void ImageToPDF::ImageToPDFForm::ImagePreview(QString name)
+{
+  QPixmap pixmap(name);
+  pixmap = pixmap.scaled(pixmap.size() * 0.1);
+  m_UiForm.ImagePreview->setPixmap(pixmap);
+  m_UiForm.ImagePreview->resize(pixmap.size());
 }
 
 void ImageToPDF::ImageToPDFForm::on_plusButton_clicked()
@@ -85,4 +95,13 @@ void ImageToPDF::ImageToPDFForm::on_buttonBox_rejected()
 {
   //QPushButton *ab = dynamic_cast<QPushButton*>(button);
   DebugOutput("aaa1");
+}
+
+void ImageToPDF::ImageToPDFForm::itemClicked(QListWidgetItem *item)
+{
+  DebugOutput("aaa1");
+  auto it = item->toolTip();
+  ImagePreview(it);
+  auto t = item->text();
+
 }

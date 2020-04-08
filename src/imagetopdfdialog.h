@@ -17,9 +17,12 @@ namespace ImageToPDF
       void on_removeAllButton_clicked();
       void on_buttonBox_clicked(QAbstractButton* btn);
       void on_buttonBox_rejected();
+      void itemClicked(QListWidgetItem*item);
 
     private:
       Ui::ImageToPDFDialog m_UiForm;
+
+      void ImagePreview(QString name);
 
 
   };
