@@ -187,7 +187,23 @@
       </layout>
      </item>
      <item row="4" column="0">
-      <widget class="QListWidget" name="InputFiles"/>
+      <widget class="QTableWidget" name="InputFiles">
+       <column>
+        <property name="text">
+         <string>Name</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Rotate</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Resize</string>
+        </property>
+       </column>
+      </widget>
      </item>
      <item row="4" column="3">
       <widget class="QListWidget" name="OutputFiles">

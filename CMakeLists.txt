@@ -21,9 +21,16 @@ set (RESOURCES Images/res.qrc)
 
 #include_directories(./include)
 
-set(IMAGE_MAGICK "`Magick++-config --cxxflags --cppflags --ldflags --libs`")
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall -std=c++11 -O0 -fpic ${IMAGE_MAGICK}" )
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall -std=c++11 -O2 ${IMAGE_MAGICK}" )
+add_definitions( -DMAGICKCORE_QUANTUM_DEPTH=16 )
+add_definitions( -DMAGICKCORE_HDRI_ENABLE=0 )
+
+#set(IMAGE_MAGICK "`Magick++-config --cxxflags --cppflags --ldflags --libs`")
+#link_directories(${ImageMagick_INCLUDE_DIRS})
+#link_directories(${ImageMagick_LIBRARIES})
+
+
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall -std=c++14 -O0 -fpic  -lMagick++-7.Q16 -lMagickCore-7.Q16 ${IMAGE_MAGICK}" )
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall -std=c++14 -O2 ${IMAGE_MAGICK}" )
 
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
    message(STATUS "Setting build type to 'Debug' as none was specified.")
@@ -35,9 +42,19 @@ find_package(Qt5 COMPONENTS Core Widgets REQUIRED)
 QT5_WRAP_UI( UI_HEADERS ${UIS} )
 #qt5_add_resources (RCC_SOURCES ${RESOURCES})
 
-add_executable(${BINARY_NAME} ${SOURCES} ${UI_HEADERS} ${RESOURCES})
+#add_library(archive OBJECT src/imagetopdfdialog.cpp)
+#target_link_libraries(archive ${ImageMagick_LIBRARIES} )
+#qt5_use_modules(archive Widgets)
+
+find_package(ImageMagick COMPONENTS Magick++ MagickWand MagickCore convert REQUIRED)
+include_directories(${ImageMagick_INCLUDE_DIRS})
+add_definitions(${ImageMagick_DEFINITIONS})
+
+add_executable(${BINARY_NAME} ${SOURCES} ${UI_HEADERS} ${RESOURCES} )
 
 qt5_use_modules(${BINARY_NAME} Widgets)
+target_link_libraries(${BINARY_NAME} ${ImageMagick_LIBRARIES})
+
 
 #find_package(Threads REQUIRED)
 #if(THREADS_HAVE_PTHREAD_ARG)
