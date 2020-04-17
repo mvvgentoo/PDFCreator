@@ -1,12 +1,13 @@
 #include "imagetopdfdialog.h"
 #include "utils.h"
 #include "globalEnums.h"
-#include <Magick++.h>
+#include "imageprocessworker.h"
 
 #include <iostream>
 #include <qstringlist.h>
 #include <qfiledialog.h>
 #include <qlistwidget.h>
+#include <qthread.h>
 
 QTableWidgetItem* CreateNameItem(const QString& str)
 {
@@ -32,6 +33,13 @@ QSlider* CreateScaleSlider()
   slider->setMinimum(1);
   slider->setValue(100);
   return slider;
+}
+
+void ImageToPDF::ImageToPDFForm::ChangeControlButtonsEnableState(bool state)
+{
+  m_UiForm.plusButton->setEnabled(state);
+  m_UiForm.minusButton->setEnabled(state);
+  m_UiForm.removeAllButton->setEnabled(state);
 }
 
 ImageToPDF::ImageToPDFForm::ImageToPDFForm(QDialog *parent) : QDialog(parent)
@@ -87,6 +95,7 @@ void ImageToPDF::ImageToPDFForm::on_plusButton_clicked()
   {
     if(m_UiForm.comboBox->currentIndex() == static_cast<int>(ListOfConverters::PDF) )
     {
+      //m_UiForm.comboBox->currentText()
       m_UiForm.OutputFiles->clear();
       QString file = "/tmp/output.pdf";
       QListWidgetItem* item = new QListWidgetItem(QFileInfo(file).fileName(), m_UiForm.OutputFiles);
@@ -104,35 +113,20 @@ void ImageToPDF::ImageToPDFForm::on_removeAllButton_clicked()
 
 void ImageToPDF::ImageToPDFForm::on_buttonBox_clicked(QAbstractButton* btn)
 {
-    DebugOutput("aaa12");
+    QThread* thread = new QThread;
+    ImageProcessWorker* worker = new ImageProcessWorker(m_UiForm.InputFiles);
+    worker->moveToThread(thread);
 
-    const auto* listWidget = m_UiForm.InputFiles;
-    std::vector<Magick::Image> ims(listWidget->rowCount());
+    connect(worker, SIGNAL (error(QString)), this, SLOT (errorString(QString)));
+    connect(thread, SIGNAL (started()), this, SLOT (preprocess()));
+    connect(thread, SIGNAL (started()), worker, SLOT (process()));
 
-    for(int row = 0; row < listWidget->rowCount(); row++)
-    {
-        auto *item = listWidget->item(row,0);
-        ims[row].read(item->toolTip().toStdString());
+    connect(worker, SIGNAL (finished()), thread, SLOT (quit()));
+    connect(worker, SIGNAL (finished()), worker, SLOT (deleteLater()));
+    connect(thread, SIGNAL (finished()), thread, SLOT (deleteLater()));
+    connect(worker, SIGNAL (finished()), this, SLOT (postprocess()));
 
-        int rotate = 0;
-        QWidget* wdg = listWidget->cellWidget(row,1);
-        if( QComboBox* item2 = dynamic_cast<QComboBox*>(wdg) )
-        {
-           rotate = item2->currentText().toInt();
-        }
-
-        ims[row].rotate(rotate);
-
-        //ims[row].resize("30%");
-    }
-
-
-    //output.magick("PDF");
-    //output.write(argv[2]);
-
-    Magick::writeImages(ims.begin(), ims.end(), m_UiForm.OutputFiles->item(0)->toolTip().toStdString());
-
-    std::system("okular /tmp/output.pdf");
+    thread->start();
 }
 
 void ImageToPDF::ImageToPDFForm::on_buttonBox_rejected()
@@ -170,4 +164,15 @@ void ImageToPDF::ImageToPDFForm::itemClicked(int r, int c)
    auto it = item->toolTip();
    ImagePreview(it, rotate);
    auto t = item->text();
+}
+
+void ImageToPDF::ImageToPDFForm::preprocess()
+{
+  DebugOutput("started");
+  ChangeControlButtonsEnableState(false);
+}
+
+void ImageToPDF::ImageToPDFForm::postprocess()
+{
+  ChangeControlButtonsEnableState(true);
 }

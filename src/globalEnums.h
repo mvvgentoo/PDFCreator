@@ -10,6 +10,11 @@ namespace ImageToPDF
       PNG
   };
 
+  static std::map<ListOfConverters, std::string> s_MappingConv
+  {
+
+  };
+
   static std::map<std::string, std::string> s_Mapping
   {
     {"pdf", "PDF"}

@@ -20,10 +20,14 @@ namespace ImageToPDF
       void itemClicked(QTableWidgetItem*item);
       void itemClicked(int r, int c);
 
+      void preprocess();
+      void postprocess();
+
     private:
-      Ui::ImageToPDFDialog m_UiForm;
+      Ui::ImageToPDFDialog m_UiForm;      
 
       void ImagePreview(QString name, int rotate);
+      void ChangeControlButtonsEnableState(bool state);
 
 
   };
